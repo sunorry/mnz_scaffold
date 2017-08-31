@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+
+program   
+  .version(require('../package').version)
+  .usage('<command> [options]')
+  .command('init', 'generate a new project from a template')
+  .command('serve', 'start a server for dev & deugging')
+  .command('build', 'prototype a new project')
+  .option('build', 'build to prd code')
+  .parse(process.argv)
+
+if(program.build) {
+    require('../commander/build').run()
+}

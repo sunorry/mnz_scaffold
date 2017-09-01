@@ -6,11 +6,16 @@ program
   .version(require('../package').version)
   .usage('<command> [options]')
   .command('init', 'generate a new project from a template')
-  .command('serve', 'start a server for dev & deugging')
+  .command('server', 'start a server for dev & debugging')
   .command('build', 'prototype a new project')
   .option('build', 'build to prd code')
+  .option('server', 'server for dev & debugging')
   .parse(process.argv)
 
 if(program.build) {
     require('../commander/build').run()
+}
+
+if(program.server) {
+    require('../commander/server').run()
 }

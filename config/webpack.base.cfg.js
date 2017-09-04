@@ -59,7 +59,6 @@ module.exports = {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title: 'tpl',
             template: 'index.html',
             minify: {
                 removeComments: true,

@@ -14,7 +14,13 @@ module.exports = merge(require('./webpack.base.cfg.js'), {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-        new UglifyJSPlugin(),
+        // new UglifyJSPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: false
+          }
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new ExtractTextPlugin('css/style@[chunkhash].css')
     ]
 })

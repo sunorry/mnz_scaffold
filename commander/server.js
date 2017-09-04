@@ -1,3 +1,4 @@
+const program = require('commander')
 const http = require('http')
 const https = require('https')
 const fs = require('fs')
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
     next()
 })
 
-function run() {
+function run(isHttps) {
     http.createServer(app).listen(80, function() {
         console.log()
         console.log(chalk.yellow(CFG.openUrl))

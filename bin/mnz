@@ -6,10 +6,11 @@ program
   .version(require('../package').version)
   .usage('<command> [options]')
   .command('init', 'generate a new project from a template')
-  .command('server', 'start a server for dev & debugging')
+  .command('server [-s]', 'start a http[s] server for dev & debugging')
   .command('build', 'prototype a new project')
   .option('build', 'build to prd code')
   .option('server', 'server for dev & debugging')
+  .option('-s https', 'server https for dev & debugging')
   .parse(process.argv)
 
 if(program.build) {
@@ -17,5 +18,5 @@ if(program.build) {
 }
 
 if(program.server) {
-    require('../commander/server').run()
+    require('../commander/server').run(program.https)
 }

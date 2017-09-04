@@ -2,11 +2,12 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const CFG = require('../common/resolveCfg')
 
 module.exports = merge(require('./webpack.base.cfg.js'), {
     output: {
         filename: 'js/[name]@[chunkhash].js',
-        publicPath: './'
+        publicPath: CFG.publicPath['build']
     },
     plugins: [
         new webpack.DefinePlugin({

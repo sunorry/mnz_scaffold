@@ -1,6 +1,7 @@
 const fs = require('fs')
 const utils = require('./utils')
 const path = require('path')
+const url = require('url')
 
 const projectPathArr = process.cwd().split('/')
 const projectName = projectPathArr[projectPathArr.length - 1]
@@ -21,14 +22,14 @@ const alias = (function getAlias() {
 })()
 
 const publicPath =(function getAlias() {
-    const pPath = path.join(projectCfg['sourcePath'], projectName, 'dist')
+    const pPath = url.resolve(projectCfg['sourcePath'], `${projectName}/dist`)
     return {
         server: pPath,
         build: pPath
     }
-})
+})()
 
-const staticPath = path.join('/', projectName, 'dist')
+const staticPath = path.join('/', projectName, 'dist') // projectname/dist
 const openUrl = `http://localhost/${projectName}/dist`
 
 module.exports = {

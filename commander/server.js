@@ -21,10 +21,20 @@ app.use((req, res, next) => {
 })
 
 function run(isHttps) {
-    http.createServer(app).listen(80, function() {
+    const server = http.createServer(app).listen(80, function() {
         console.log()
         console.log(chalk.yellow(CFG.openUrl))
         console.log()
+    })
+
+    server.on('error', e => {
+        if (e.code === 'EADDRINUSE') {
+            console.log(chalk.red('[ERROR]: 端口 80 已经被占用, 请关闭占用该端口的程序或者使用其它端口.'));
+        }
+        if (e.code === 'EACCES') {
+            console.log(chalk.red('[ERROR]: 权限不足, 请使用sudo执行.'));
+        }
+        process.exit(1);
     })
 
     /*
@@ -43,7 +53,10 @@ process.nextTick(() => {
     const compiler = webpack(require('../config/webpack.server.cfg.js'))
     compiler.watch({},(err, stats) => {
         if (err) {
-            console.error(err)
+            console.error(err.stack || err);
+            if (err.details) {
+              console.error(err.details);
+            }
             return
         }
         console.log(stats.toString({

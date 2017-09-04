@@ -5,22 +5,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-const projectCfgPath = resolve('config.js')
-let projectCfg = {}
-
-if(fs.existsSync(projectCfgPath)) {
-    projectCfg = require(projectCfgPath)
-}
+const utils = require('../common/utils')
+const CFG = require('../common/resolveCfg')
 
 module.exports = {
-    entry: projectCfg['exports'],
+    entry: CFG.projectCfg['exports'],
     output: {
-        path: resolve('./dist'),
-        publicPath: './'
+        path: utils.resolve('./dist')
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
-        alias: getAlias(projectCfg.alias)
+        alias: CFG.alias
     },
     module: {
         rules: [{
@@ -29,7 +24,7 @@ module.exports = {
         }, {
             test: /\.js$/,
             loader: 'babel-loader',
-            include:[resolve('src')]
+            include:[utils.resolve('src')]
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             loader: 'url-loader'
@@ -45,7 +40,7 @@ module.exports = {
         }]
     },
     plugins: [
-        new CleanWebpackPlugin([resolve('dist')], {
+        new CleanWebpackPlugin([utils.resolve('dist')], {
             root: process.cwd()
         }),
         new webpack.HashedModuleIdsPlugin(),
@@ -63,24 +58,14 @@ module.exports = {
             name: "manifest",
             minChunks: Infinity
         }),
-        new ExtractTextPlugin('style.css'),
         new HtmlWebpackPlugin({
             title: 'tpl',
             template: 'index.html',
-            // inject: true
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
+            }
         })
     ]
-}
-
-function resolve(_path) {
-    return path.resolve(process.cwd(), _path)
-}
-
-function getAlias(cfg) {
-    if(!cfg) return {}
-    const alias = {}
-    Object.keys(cfg).forEach(el => {
-        alias[el] = path.resolve(process.cwd(), cfg[el])
-    })
-    return alias
 }

@@ -5,18 +5,25 @@ const program = require('commander')
 program   
   .version(require('../package').version)
   .usage('<command> [options]')
-  .command('init', 'generate a new project from a template')
+  .command('init [name]', 'generate a new project from a template')
   .command('server [-s]', 'start a http[s] server for dev & debugging')
   .command('build', 'prototype a new project')
   .option('build', 'build to prd code')
   .option('server', 'server for dev & debugging')
   .option('-s https', '[mnz server -s] : server https for dev & debugging')
+  .option('init', 'mnz init projectName')
   .parse(process.argv)
 
 if(program.build) {
     require('../commander/build').run()
 }
 
+// 这块比较蛋疼
 if(program.server) {
     require('../commander/server').run(program.https)
+}
+
+if(program.init) {
+    const rawName = program.args[0] || 'vue-tpl'
+    require('../commander/init').run(rawName)
 }

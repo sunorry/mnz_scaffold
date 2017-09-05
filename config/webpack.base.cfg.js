@@ -43,7 +43,6 @@ module.exports = {
         new CleanWebpackPlugin([utils.resolve('dist')], {
             root: process.cwd()
         }),
-        new webpack.HashedModuleIdsPlugin(),
         new webpack.DefinePlugin({
             'process.env': JSON.stringify('development')
         }),

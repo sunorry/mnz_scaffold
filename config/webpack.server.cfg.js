@@ -16,6 +16,7 @@ module.exports = merge(require('./webpack.base.cfg.js'), {
                 'NODE_ENV': JSON.stringify('development')
             }
         }),
+        new webpack.NamedModulesPlugin(),
         new ExtractTextPlugin('css/style.css')
     ]
 })

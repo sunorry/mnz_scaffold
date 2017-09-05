@@ -14,7 +14,7 @@ module.exports = merge(require('./webpack.base.cfg.js'), {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-        // new UglifyJSPlugin(),
+        new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
           compress: {
             warnings: false

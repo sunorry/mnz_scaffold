@@ -13,11 +13,23 @@ function run(rawName) {
 function downloadAndGenerate(rawName) {
     const spinner = ora('downloading template')
     spinner.start()
-    download(repo, path.resolve(process.cwd(), rawName), { clone: false }, function(err) {
+    download(repo, path.resolve(process.cwd(), rawName), {
+        clone: false
+    }, function(err) {
         spinner.stop()
-        if(err) {
+        if (err) {
             console.log(`Failed to download repo ${repo} ${err.message.trim()}`)
+            return
         }
+        console.log()
+        console.log(`   mnz · Generated "${rawName}".`)
+        console.log()
+        console.log('   To get started:')
+        console.log()
+        console.log(chalk.magenta(`     cd ${rawName}`))
+        console.log(chalk.magenta('     npm install'))
+        console.log(chalk.magenta('     sudo mnz server'))
+        console.log()
     })
 }
 

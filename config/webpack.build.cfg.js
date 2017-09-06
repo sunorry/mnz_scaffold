@@ -5,7 +5,7 @@ const CFG = require('../common/resolveCfg')
 
 module.exports = merge(require('./webpack.base.cfg.js'), {
     output: {
-        filename: 'js/[name]@[chunkhash].js',
+        filename: 'js/[name]_[chunkhash].js',
         publicPath: CFG.publicPath['build']
     },
     plugins: [

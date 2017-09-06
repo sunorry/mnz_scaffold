@@ -13,9 +13,14 @@ const app = express()
 app.use(CFG['staticPath'], express.static(path.resolve(process.cwd(), 'dist')))
 
 app.use((req, res, next) => {
-    const url = path.join(process.cwd(), '../', req.url)
+    const ext = path.extname(req.url) // .css || .js
+    const basename = path.basename(req.url) // main_xxdf23f324.css
+    const replaceStr = '_' + basename.match(new RegExp(`[^_]*(?=${ext})`))[0]
+    const filePath = req.url.replace(replaceStr, '')
+    const url = path.join(process.cwd(), '../', filePath)
+
     if(fs.existsSync(url)) {
-        res.redirect('http://localhost' + req.url)
+        res.redirect(filePath)
     }
     next()
 })

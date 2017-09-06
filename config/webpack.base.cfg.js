@@ -9,7 +9,9 @@ const utils = require('../common/utils')
 const CFG = require('../common/resolveCfg')
 
 module.exports = {
-    entry: CFG.projectCfg['exports'],
+    entry: CFG.projectCfg['exports'].map(el => {
+        return utils.resolve(el)
+    }),
     output: {
         path: utils.resolve('./dist')
     },

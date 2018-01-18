@@ -10,6 +10,7 @@ module.exports = merge(require('./webpack.base.cfg.js'), {
         filename: 'js/[name].js',
         publicPath: CFG['publicPath']['server']
     },
+    devtool: "cheap-module-eval-source-map",
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {

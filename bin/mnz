@@ -1,29 +1,33 @@
 #!/usr/bin/env node
 
 const program = require('commander')
+const chalk = require('chalk')
 
-program   
+program
   .version(require('../package').version)
   .usage('<command> [options]')
-  .command('init [name]', 'generate a new project from a template')
+  .command('init [framework] [projectName]', 'generate a new project from a template, framework react/vue')
   .command('server [-s]', 'start a http[s] server for dev & debugging')
   .command('build', 'prototype a new project')
+  .option('init', 'mnz init projectName')
   .option('build', 'build to prd code')
   .option('server', 'server for dev & debugging')
   .option('-s https', '[mnz server -s] : server https for dev & debugging')
-  .option('init', 'mnz init projectName')
   .parse(process.argv)
 
-if(program.build) {
-    require('../commander/build').run()
+if (program.build) {
+  require('../commander/build').run()
 }
 
 // 这块比较蛋疼
-if(program.server) {
-    require('../commander/server').run(program.https)
+if (program.server) {
+  require('../commander/server').run(program.https)
 }
-
-if(program.init) {
-    const rawName = program.args[0] || 'vue-tpl'
-    require('../commander/init').run(rawName)
+if (program.init) {
+  const args = program.args
+  if (!args.length) {
+    console.log(chalk.red('please choose frameword, eg: '), chalk.yellow('mnz react projectName'))
+  }
+  const rawName = args[1] || 'projectName'
+  require('../commander/init').run(args[0], rawName)
 }

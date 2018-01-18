@@ -5,7 +5,7 @@ function run() {
     compiler.run((err, stats) => {
         if(err) {
             console.log(err)
-            return            
+            return
         }
 
         console.log(stats.toString({

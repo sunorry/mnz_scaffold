@@ -1,6 +1,6 @@
 {
   "name": "mnz",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "FE scaffold",
   "main": "index.js",
   "bin": {
